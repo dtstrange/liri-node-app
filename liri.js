@@ -4,6 +4,8 @@ var spotify = require("node-spotify-api");
 var twitter = require("twitter");
 var fs = require("fs");
 var keys = require("./keys.js");
+var http = require('http');
+var https = require('https');
 //keys variables
 var twitCK = keys.twitterKeys.consumer_key;
 var twitCS = keys.twitterKeys.consumer_secret;
@@ -56,15 +58,39 @@ if (input1 === "movie-this" && input2 !== "") {
 
     });
 } else if (input1 === "spotify-this-song" && input2 !== "") {
+    var spotify = new Spotify({
+        id: spotID,
+        secret: spotCS
+    });
     spotify.search({ type: 'track', query: input2 }, function(err, data) {
         if (err) {
-            console.log('Error occurred: ' + err);
-            return;
+            return console.log('Error occurred: ' + err);
         }
 
-        // Do something with 'data'
-        else {
-            console.log(data);
-        }
+        console.log(data);
     });
+} else if (input1 === "spotify-this-song") {
+    var spotify = new Spotify({
+        id: spotID,
+        secret: spotCS
+    });
+    spotify.search({ type: 'track', query: "The Sign" }, function(err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+
+        console.log(data);
+    });
+} else if (input1 === "do-what-it-says") {
+    fs.readFile("./random.txt", "utf8", function(err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            var txtData = data.split(",");
+            for (var i = 0; i < txtData.length; i++) {
+                input1 = txtData[0];
+                input2 = txtData[1];
+            }
+        }
+    })
 }
