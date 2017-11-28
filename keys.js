@@ -4,7 +4,7 @@ exports.twitterKeys = {
     consumer_key: "cUcXs65pL5jxuwOzjkmVwo6AO",
     consumer_secret: "fp4mWPmYM1m0uoL8C5c7vQ2tq4U5LczwLqgBOfe4VAe2TQP4QT",
     access_token: "4138027512-m1iwYZL9U5GAGodN0ovvkIuO2X5o7XN6zq1BCVo",
-    access_secret: " nwy26nqKSCjw2BWRqlqq5xr3qBpGOMoUhKqq48GsIsQ93"
+    access_secret: "nwy26nqKSCjw2BWRqlqq5xr3qBpGOMoUhKqq48GsIsQ93"
 };
 
 exports.spotifyKeys = {

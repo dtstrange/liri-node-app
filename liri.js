@@ -18,71 +18,92 @@ var omdbKey = keys.omdbKey;
 var input1 = process.argv[2];
 var input2 = process.argv[3];
 
-if (input1 === "movie-this" && input2 !== "") {
-    axios.get("http://www.omdbapi.com/?t=" + input2 + "&apikey=" + omdbKey)
-        .then(function(response) {
-            console.log("Title: " + response.data.Title)
-            console.log("Year: " + response.data.Year)
-            console.log("IMDB Rating: " + response.data.Ratings[0].Value)
-            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value)
-            console.log("Country: " + response.data.Country)
-            console.log("Language: " + response.data.Language)
-            console.log("Plot: " + response.data.Plot)
-            console.log("Cast: " + response.data.Actors)
-        })
-        .catch(function(error) {
-            console.log(error)
-        })
-} else if (input1 === "movie-this") {
-    axios.get("http://www.omdbapi.com/?t=Mr.+Nobody&apikey=" + omdbKey)
-        .then(function(response) {
-            console.log("Title: " + response.data.Title)
-            console.log("Year: " + response.data.Year)
-            console.log("IMDB Rating: " + response.data.Ratings[0].Value)
-            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value)
-            console.log("Country: " + response.data.Country)
-            console.log("Language: " + response.data.Language)
-            console.log("Plot: " + response.data.Plot)
-            console.log("Cast: " + response.data.Actors)
-        })
-} else if (input1 === "my-tweets") {
-    var client = new twitter({
-        consumer_key: twitCK,
-        consumer_secret: twitCS,
-        access_token_key: twitAT,
-        access_token_secret: twitAS
-    });
-    var params = { dustin_strange: 'nodejs' };
-    client.get('search/tweets', { q: 'node.js' }, function(error, tweets, response) {
-        console.log(tweets);
 
-    });
-} else if (input1 === "spotify-this-song" && input2 !== "") {
-    var spotify = new Spotify({
-        id: spotID,
-        secret: spotCS
-    });
-    spotify.search({ type: 'track', query: input2 }, function(err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
-        }
 
-        console.log(data);
-    });
-} else if (input1 === "spotify-this-song") {
-    var spotify = new Spotify({
-        id: spotID,
-        secret: spotCS
-    });
-    spotify.search({ type: 'track', query: "The Sign" }, function(err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
-        }
+function movieThis() {
+    if (input1 === "movie-this" && input2 !== "") {
+        axios.get("http://www.omdbapi.com/?t=" + input2 + "&apikey=" + omdbKey)
+            .then(function (response) {
+                console.log("Title: " + response.data.Title)
+                console.log("Year: " + response.data.Year)
+                console.log("IMDB Rating: " + response.data.Ratings[0].Value)
+                console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value)
+                console.log("Country: " + response.data.Country)
+                console.log("Language: " + response.data.Language)
+                console.log("Plot: " + response.data.Plot)
+                console.log("Cast: " + response.data.Actors)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    } else if (input1 === "movie-this") {
+        axios.get("http://www.omdbapi.com/?t=Mr.+Nobody&apikey=" + omdbKey)
+            .then(function (response) {
+                console.log("Title: " + response.data.Title)
+                console.log("Year: " + response.data.Year)
+                console.log("IMDB Rating: " + response.data.Ratings[0].Value)
+                console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value)
+                console.log("Country: " + response.data.Country)
+                console.log("Language: " + response.data.Language)
+                console.log("Plot: " + response.data.Plot)
+                console.log("Cast: " + response.data.Actors)
+            })
+    }
+}
 
-        console.log(data);
-    });
-} else if (input1 === "do-what-it-says") {
-    fs.readFile("./random.txt", "utf8", function(err, data) {
+function myTweets() {
+    if (input1 === "my-tweets") {
+        var client = new twitter({
+            consumer_key: twitCK,
+            consumer_secret: twitCS,
+            access_token_key: twitAT,
+            access_token_secret: twitAS
+        });
+        var params = { dustin_strange: 'nodejs' };
+        client.get('search/tweets', { q: 'node.js' }, function (error, tweets, response) {
+
+            for (i = 0; i < 10; i++) {
+                console.log("Tweets: " + tweets.statuses[i].text);
+            }
+
+        });
+
+
+    }
+}
+
+function spotifyThis() {
+    if (input1 === "spotify-this-song" && input2 !== "") {
+        var spotify = new Spotify({
+            id: spotID,
+            secret: spotCS
+        });
+        spotify.search({ type: 'track', query: input2 }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            } else {
+
+                console.log(data);
+            }
+        });
+    } else if (input1 === "spotify-this-song") {
+        var spotify = new Spotify({
+            id: spotID,
+            secret: spotCS
+        });
+        spotify.search({ type: 'track', query: "The Sign" }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            } else {
+
+                console.log(data);
+            }
+        });
+    }
+}
+
+if (input1 === "do-what-it-says") {
+    fs.readFile("./random.txt", "utf8", function (err, data) {
         if (err) {
             console.log(err)
         } else {
@@ -90,7 +111,14 @@ if (input1 === "movie-this" && input2 !== "") {
             for (var i = 0; i < txtData.length; i++) {
                 input1 = txtData[0];
                 input2 = txtData[1];
+
             }
         }
     })
+} else if (input1 === "movie-this") {
+    movieThis();
+} else if (input1 === "my-tweets") {
+    myTweets();
+} else if (input1 === "spotify-this-song") {
+    spotifyThis();
 }
