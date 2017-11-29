@@ -26,7 +26,7 @@ var spotify = new Spotify({
 
 
 function movieThis() {
-    if (input1 === "movie-this" && input2 !== "") {
+    if (input1 === "movie-this" && input2 !== undefined) {
         axios.get("http://www.omdbapi.com/?t=" + input2 + "&apikey=" + omdbKey)
             .then(function (response) {
                 console.log("Title: " + response.data.Title);
@@ -47,7 +47,7 @@ function movieThis() {
                 console.log("===========");
             })
 
-    } else if (input1 === "movie-this" && input2 === "") {
+    } else {
         axios.get("http://www.omdbapi.com/?t=Mr.+Nobody&apikey=" + omdbKey)
             .then(function (response) {
                 console.log("Title: " + response.data.Title);
@@ -96,7 +96,8 @@ function myTweets() {
 }
 
 function spotifyThis() {
-    if (input1 === "spotify-this-song" && input2 !== "") {
+
+    if (input1 === "spotify-this-song" && input2 !== undefined) {
 
         spotify.search({ type: 'track', query: '"' + input2 + '"' }, function (err, data) {
             if (err) {
@@ -114,21 +115,25 @@ function spotifyThis() {
 
 
         });
-    } else if (input1 === "spotify-this-song") {
-        var spotify = new Spotify({
-            id: spotID,
-            secret: spotCS
-        });
-        spotify.search({ type: 'track', query: "The Sign" }, function (err, data) {
+    }
+    else {
+        spotify.search({ type: 'track', query: "the sign" }, function (err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
-            } else {
+            } 
+            for (i = 0; i < 10; i++) {
 
-                console.log(data);
+                console.log(data.tracks.items[i].artists[0].name);
+                console.log(data.tracks.items[i].name);
+                console.log(data.tracks.items[i].preview_url);
+                console.log(data.tracks.items[i].album.name);
+                console.log("============")
+
             }
         });
     }
 }
+
 
 if (input1 === "movie-this") {
     movieThis();
