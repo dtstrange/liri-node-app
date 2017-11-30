@@ -17,6 +17,9 @@ var omdbKey = keys.omdbKey;
 //input variables
 var input1 = process.argv[2];
 var input2 = process.argv[3];
+for(i=4; i<process.argv.length; i++){
+    input2 += '+' + process.argv[i];
+}
 //spotify security
 var spotify = new Spotify({
     id: spotID,
@@ -24,7 +27,7 @@ var spotify = new Spotify({
 });
 
 
-
+// axios call to get movie data
 function movieThis() {
     if (input1 === "movie-this" && input2 !== undefined) {
         axios.get("http://www.omdbapi.com/?t=" + input2 + "&apikey=" + omdbKey)
@@ -72,7 +75,7 @@ function movieThis() {
             })
     }
 }
-
+//function to call tweets
 function myTweets() {
     if (input1 === "my-tweets") {
         var client = new twitter({
@@ -94,7 +97,7 @@ function myTweets() {
 
     }
 }
-
+//function to search a song on spotify
 function spotifyThis() {
 
     if (input1 === "spotify-this-song" && input2 !== undefined) {
@@ -103,6 +106,7 @@ function spotifyThis() {
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
+            //limit to 10 results
             for (i = 0; i < 10; i++) {
 
                 console.log(data.tracks.items[i].artists[0].name);
@@ -121,6 +125,7 @@ function spotifyThis() {
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
+            //limit to 10 results
             for (i = 0; i < 10; i++) {
 
                 console.log(data.tracks.items[i].artists[0].name);
@@ -139,6 +144,7 @@ function doWhatItSays() {
         if (err) {
             console.log(err)
         } else {
+            //split file into searchable array
             var txtData = data.split(",");
             input1 = txtData[0];
             input2 = txtData[1];
@@ -150,7 +156,7 @@ function doWhatItSays() {
     })
 }
 
-
+//switch case function for the input commands.
 function switchCase() {
     switch (input1) {
         case 'movie-this':
