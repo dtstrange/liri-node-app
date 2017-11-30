@@ -5,7 +5,12 @@ LIRI is a node.js application that can pull information from twitter, spotify, a
 use npm install for required components in package.json
 
 Commands for program
+
+
 my-tweets
+
 movie-this [name of movie]
+
 spotify-this-song [name of song]
+
 do-what-it-says
