@@ -120,7 +120,7 @@ function spotifyThis() {
         spotify.search({ type: 'track', query: "the sign" }, function (err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
-            } 
+            }
             for (i = 0; i < 10; i++) {
 
                 console.log(data.tracks.items[i].artists[0].name);
@@ -134,11 +134,44 @@ function spotifyThis() {
     }
 }
 
+function doWhatItSays() {
+    fs.readFile("./random.txt", "utf8", function (err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            var txtData = data.split(",");
+            input1 = txtData[0];
+            input2 = txtData[1];
+            
 
-if (input1 === "movie-this") {
-    movieThis();
-} else if (input1 === "my-tweets") {
-    myTweets();
-} else if (input1 === "spotify-this-song") {
-    spotifyThis();
+            switchCase();
+
+        }
+    })
 }
+
+
+function switchCase() {
+    switch (input1) {
+        case 'movie-this':
+            movieThis();
+            break;
+
+        case 'my-tweets':
+            myTweets();
+            break;
+
+        case 'spotify-this-song':
+            spotifyThis();
+            break;
+
+        case 'do-what-it-says':
+            doWhatItSays();
+            break;
+
+
+    }
+}
+
+
+switchCase();
