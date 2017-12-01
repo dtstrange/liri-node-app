@@ -4,8 +4,6 @@ var Spotify = require("node-spotify-api");
 var twitter = require("twitter");
 var fs = require("fs");
 var keys = require("./keys.js");
-var http = require('http');
-var https = require('https');
 //keys variables
 var twitCK = keys.twitterKeys.consumer_key;
 var twitCS = keys.twitterKeys.consumer_secret;
